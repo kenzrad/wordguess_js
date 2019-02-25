@@ -1,23 +1,49 @@
 //use keytouch event (any key) to initiate word selection
 //create array for word choices
 var words = [
-    "New Vegas", 
-    "Hyrule", 
-    "Link", 
-    "Navi", 
-    "Whiterun", 
-    "Horde",
-    "Magicka", 
-    "Bethesda", 
-    "Greybeards", 
-    "Sovngarde", 
-    "Wasteland", 
-    "SPECIAL", 
-    "Triforce", 
-    "Ocarina", 
-    "Epona", 
-    "Gananondorf",
-    "Deku"
+    "hyrule", 
+    "link", 
+    "navi", 
+    "whiterun", 
+    "horde",
+    "magicka", 
+    "bethesda", 
+    "greybeards", 
+    "sovngarde", 
+    "wasteland",  
+    "triforce", 
+    "ocarina", 
+    "epona", 
+    "gananondorf",
+    "deku",
+    "radiation",
+    "ghoul",
+    "toadstool",
+    "rayman",
+    "argonia",
+    "dunmer",
+    "khajiit",
+    "tamriel",
+    "overlord",
+    "nordic",
+    "sheik",
+    "brotherhood",
+    "goodneighbor",
+    "nukacola",
+    "codsworth",
+    "deathclaw",
+    "mirelurk",
+    "bloodbug",
+    "radroach",
+    "annihilator",
+    "behemoth",
+    "necrolyte",
+    "conjuration",
+    "wisp",
+    "balverine",
+    "arngeir",
+    "dragonborn",
+    "paarthurnax",
 ];
 
 //pick a random word from the array
@@ -38,9 +64,9 @@ var lettersLeft = wordAnswer.length;
 console.log(lettersLeft);
 
 //LOOP the game while there are still letters remaining
-if (lettersLeft > 0) {
-    function(gameOn)
-} //explore maybe using a while loop!
+// if (lettersLeft > 0) {
+//     function(gameOn)
+// } //explore maybe using a while loop!
 
 //Game on:
 //take player guesses
@@ -49,10 +75,10 @@ if (lettersLeft > 0) {
 //update letterGuess for correct and incorrect guesses
 //update remainingGuesses for incorrect guesses
 
-//Player guesses
-document.onkeyup = function(event) {
-    gameOn()
-}
+//Player guesses (remember to convert to lowercase)
+// document.onkeyup = function(event) {
+//     gameOn()
+// }
 
 // If the word has not been guessed {
 //     Show the player current progress
@@ -61,12 +87,12 @@ document.onkeyup = function(event) {
 //log the player's guess
 
 //check if the guess is valid
-for (var j = 0; j < word.length; j++) { //loops thorugh the letters of the random word
-    if (word[j] === playerGuess) { //check if current letter in the word matches user entry
-        wordAnswer[j] = playerGuess; //if true, than the wordAnswer array will get updated with the player guess. It should update in that spot because its looping the the letters (hopefully, need to test once I guess the script from user keys and whatnot)
-        lettersLeft--; //if the letter matches, subtract 1 from the number of letters left (don't log this variable, I'm using this to track game status)
-    }
-}
+// for (var j = 0; j < word.length; j++) { //loops thorugh the letters of the random word
+//     if (word[j] === playerGuess) { //check if current letter in the word matches user entry
+//         wordAnswer[j] = playerGuess; //if true, than the wordAnswer array will get updated with the player guess. It should update in that spot because its looping the the letters (hopefully, need to test once I guess the script from user keys and whatnot)
+//         lettersLeft--; //if the letter matches, subtract 1 from the number of letters left (don't log this variable, I'm using this to track game status)
+//     }
+// }
 
 // If the player guess matches any letter of the random word {
 //     Reveal that letter in the word AND alert(letters log)
@@ -83,9 +109,9 @@ for (var j = 0; j < word.length; j++) { //loops thorugh the letters of the rando
 
 //Current progress:
 //Letters guessed
-var letterGuess = [];
+// var letterGuess = [];
 
-letterGuess.push = [playerGuess]
+// letterGuess.push = [playerGuess]
 
 //Remaining guesses
 //
