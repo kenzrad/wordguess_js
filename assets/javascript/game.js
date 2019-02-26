@@ -50,19 +50,27 @@ var words = [
 var wins = 0;
 var losses = 0;
 
+
 // Create variables that hold references to the places in the HTML where we want to display things.
 var directionsText = document.getElementById("directions-text");
 var userChoiceText = document.getElementById("userchoice-text");
-var wordAnswerText = document.getElementById("word-answer");
+var wordAnswerText = document.getElementById("word-answer-text");
 var winsText = document.getElementById("wins-text");
 var lossesText = document.getElementById("losses-text");
 
+//Ghost variables
+var keyInput = document.getElementById("key-up");
+var letterGuess;
+
+
+
+
 
 //use keytouch event (any key) to initiate word selection (I may change this to be an onClick event)
-document.onkeyup = function (gameOn) {
+var gameOn = function(game) {
     //pick a random word from the array
     var word = words[Math.floor(Math.random() * words.length)];
-    // console.log(word);
+    console.log(word);
 
     //remove that word from the array so it doesn't get selected again:
     // indexOf.words[]
@@ -74,29 +82,32 @@ document.onkeyup = function (gameOn) {
     for (var i = 0; i < word.length; i++) {
         wordAnswer[i] = ("_");
     }
-    wordAnswerText.textContent = wordAnswer;
-    
-    // console.log(wordAnswer);
+    wordAnswerText.textContent = wordAnswer.join(" ");
+    console.log(wordAnswer);
 
     //Create an array for remaining letters, which will be equal to the number of "_"
     var lettersLeft = wordAnswer.length;
-    // console.log(lettersLeft);
-
+    console.log(lettersLeft);
+    directionsText.textContent = "Guess any letter of the alphabet!";
+    
 
     //LOOP the game while there are still letters remaining
-    if (lettersLeft > 0) {
-        directionsText.textContent = "Guess any letter of the alphabet!"
-        document.onkeyup = function(userKey) {
-            var letterGuess = userKey.key;
-        }
-    } else {
-        directionsText.textContent = "Press any key to play again!";
-        return;
+    document.onkeyup = function(userKey) {
+        var letterGuess = userKey.key;
+        console.log = ("letter guess is" + letterGuess);
+        for (var i = 0; i < wordAnswer.length;  i++) {
+            if (wordAnswer[i] === letterGuess) {
+                var letterIndex = wordAnswer.indexOf(i);
+                if (letterIndex!== -1) {
+                    wordAnswer[letterIndex] = letterGuess;
+                }
+            } 
+        //     else {
+        // directionsText.textContent = "Press any key to play again!";
+        // return;
+        // }   
     }
-    } //explore maybe using a while loop!
-
-
-
+}
     //Game on:
     //take player guesses
     //show game progress
@@ -154,4 +165,5 @@ document.onkeyup = function (gameOn) {
     // }
 
     // If the player does not guess the word AND choices are up {
-    //     End game and log loss
+    // End game and log loss
+}
