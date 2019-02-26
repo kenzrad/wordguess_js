@@ -49,6 +49,7 @@ var words = [
 //variables for number of wins/losses (start at 0)
 var wins = 0;
 var losses = 0;
+var word = 0;
 
 
 // Create variables that hold references to the places in the HTML where we want to display things.
@@ -58,56 +59,55 @@ var wordAnswerText = document.getElementById("word-answer-text");
 var winsText = document.getElementById("wins-text");
 var lossesText = document.getElementById("losses-text");
 
-//Ghost variables
-var keyInput = document.getElementById("key-up");
-var letterGuess;
+console.log(word);
 
-
-
-
-
-//use keytouch event (any key) to initiate word selection (I may change this to be an onClick event)
-var gameOn = function(game) {
-    //pick a random word from the array
-    var word = words[Math.floor(Math.random() * words.length)];
+document.onkeyup = function(gameOn) {
     console.log(word);
-
-    //remove that word from the array so it doesn't get selected again:
-    // indexOf.words[]
-
-    //create an array to hold the placeholder letters ("_") for the randomized word
-    var wordAnswer = [];
-
-    //This is a loop that will add one "_" until the "n-1" the word.length. This works out to the number of letters in the word because it starts at 0! The word becomes an array of "_"
-    for (var i = 0; i < word.length; i++) {
-        wordAnswer[i] = ("_");
-    }
-    wordAnswerText.textContent = wordAnswer.join(" ");
-    console.log(wordAnswer);
-
-    //Create an array for remaining letters, which will be equal to the number of "_"
-    var lettersLeft = wordAnswer.length;
-    console.log(lettersLeft);
-    directionsText.textContent = "Guess any letter of the alphabet!";
+    if (word == 0) {
+        //pick a random word from the array
+        word = words[Math.floor(Math.random() * words.length)];
+        console.log(word);
     
+        //remove that word from the array so it doesn't get selected again:
+        // indexOf.words[]
+    
+        //create an array to hold the placeholder letters ("_") for the randomized word
+        var wordAnswer = [];
+    
+        //This is a loop that will add one "_" until the "n-1" the word.length. This works out to the number of letters in the word because it starts at 0! The word becomes an array of "_"
+        for (var i = 0; i < word.length; i++) {
+            wordAnswer[i] = ("_");
+        }
+        wordAnswerText.textContent = wordAnswer.join(" ");
+        console.log(wordAnswer);
+    
+        //Create an array for remaining letters, which will be equal to the number of "_"
+        var lettersLeft = wordAnswer.length;
+        console.log(lettersLeft);
+        directionsText.textContent = "Guess any letter of the alphabet!";
+    
+    }
 
-    //LOOP the game while there are still letters remaining
-    document.onkeyup = function(userKey) {
-        var letterGuess = userKey.key;
-        console.log = ("letter guess is" + letterGuess);
+//LOOP the game while there are still letters remaining
+    else {
+        var userGuess = gameOn.key;
+        console.log("letter guess is" + " " + userGuess);
         for (var i = 0; i < wordAnswer.length;  i++) {
-            if (wordAnswer[i] === letterGuess) {
+            if (wordAnswer[i] === userGuess) {
                 var letterIndex = wordAnswer.indexOf(i);
                 if (letterIndex!== -1) {
-                    wordAnswer[letterIndex] = letterGuess;
+                wordAnswer[letterIndex] = userGuess;
                 }
             } 
-        //     else {
+        }
+    }
+}
+    //     //     else {
         // directionsText.textContent = "Press any key to play again!";
         // return;
         // }   
-    }
-}
+
+
     //Game on:
     //take player guesses
     //show game progress
@@ -166,4 +166,3 @@ var gameOn = function(game) {
 
     // If the player does not guess the word AND choices are up {
     // End game and log loss
-}
