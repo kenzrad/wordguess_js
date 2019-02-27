@@ -49,14 +49,16 @@ var words = [
 //variables for number of wins/losses (start at 0)
 var wins = 0;
 var losses = 0;
+var letter = [];
 
 //Ghost variables
 var word = 0;
 var userGuess;
 var wordAnswer;
-var lettersLeft;
-var letterIndex;
+var lettersLeft = 0;
 var wordAnsweNew;
+var check = 0;
+var limbs = 5;
 
 // Create variables that hold references to the places in the HTML where we want to display things.
 var directionsText = document.getElementById("directions-text");
@@ -64,10 +66,11 @@ var userChoiceText = document.getElementById("userchoice-text");
 var wordAnswerText = document.getElementById("word-answer-text");
 var winsText = document.getElementById("wins-text");
 var lossesText = document.getElementById("losses-text");
+var letterText = document.getElementById("letter-text");
 
 
 document.onkeyup = function(gameOn) {
-    if (word == 0) {
+    if (lettersLeft == 0) {
         //pick a random word from the array
         word = words[Math.floor(Math.random() * words.length)];
         console.log(word);
@@ -83,11 +86,9 @@ document.onkeyup = function(gameOn) {
             wordAnswer[i] = ("_");
         }
         wordAnswerText.textContent = wordAnswer.join(" ");
-        console.log(wordAnswer);
     
         //Create an array for remaining letters, which will be equal to the number of "_"
         lettersLeft = wordAnswer.length;
-        console.log(lettersLeft);
         directionsText.textContent = "Guess any letter of the alphabet!";
     
     }
@@ -95,18 +96,18 @@ document.onkeyup = function(gameOn) {
 //LOOP the game while there are still letters remaining
     else {
         userGuess = gameOn.key;
-        console.log("letter guess is" + " " + userGuess);
-        console.log(wordAnswer);
+        check = lettersLeft;
         for (var i = 0; i < wordAnswer.length;  i++) {
             if (word[i] === userGuess) {
-                console.log("yes")
+                lettersLeft--;
                 wordAnswer[i] = userGuess;
                 wordAnswerText.textContent = wordAnswer.join(" ");
             }
-            else (letterIndex !== -1); {
-                letterIndex = wordAnswer.indexOf(i);
-            }
-             
+        }
+        if ((lettersLeft - check) === 0) {
+            limbs--;
+            letter.push(userGuess);
+            letterText.textContent = ("Incorrect Letters Guessed: " + letter.join(" "));
         }
     }
 }
