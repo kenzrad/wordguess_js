@@ -67,10 +67,11 @@ var wordAnswerText = document.getElementById("word-answer-text");
 var winsText = document.getElementById("wins-text");
 var lossesText = document.getElementById("losses-text");
 var letterText = document.getElementById("letter-text");
+var limbsText = document.getElementById("limbs-text");
 
 
 document.onkeyup = function(gameOn) {
-    if (lettersLeft == 0) {
+    if (word == 0) {
         //pick a random word from the array
         word = words[Math.floor(Math.random() * words.length)];
         console.log(word);
@@ -90,11 +91,15 @@ document.onkeyup = function(gameOn) {
         //Create an array for remaining letters, which will be equal to the number of "_"
         lettersLeft = wordAnswer.length;
         directionsText.textContent = "Guess any letter of the alphabet!";
+        letterText.textContent = "Incorrect Letters Guessed: ";
+        limbsText.textContent = "Number of Limbs Remaining: " + limbs;
+        winsText.textContent = "Wins: " + wins;
+        lossesText.textContent = "Losses: " + losses;
     
     }
 
 //LOOP the game while there are still letters remaining
-    else {
+    else if (lettersLeft > 0) {
         userGuess = gameOn.key;
         check = lettersLeft;
         for (var i = 0; i < wordAnswer.length;  i++) {
@@ -106,10 +111,24 @@ document.onkeyup = function(gameOn) {
         }
         if ((lettersLeft - check) === 0) {
             limbs--;
+            limbsText.textContent = "Number of Limbs Remaining: " + limbs;
             letter.push(userGuess);
             letterText.textContent = ("Incorrect Letters Guessed: " + letter.join(" "));
         }
     }
+    else if ((lettersLeft === 0)&&(limbs > 0)) {
+        wins++;
+        word = 0;
+        wordAnswer = null;
+        userGuess = null;
+    }
+    else if (limbs == 0) {
+        losses++;
+        word = 0;
+        wordAnswer = null;
+        userGuess = null;
+    }
+    
 }
     //     //     else {
         // directionsText.textContent = "Press any key to play again!";
