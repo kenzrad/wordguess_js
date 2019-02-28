@@ -142,16 +142,7 @@ document.onkeyup = function(gameOn) {
         }
     }
 
-    function cleanSlate() {
-        word = 0;
-        wordAnswer = 0;
-        limbs = 5;
-        directionsText.textContent = "Press any key to try again!";
-        letterText.textContent = "Incorrect Letters Guessed: ";
-        limbsText.textContent = "Number of Limbs Remaining: " + limbs;
-        winsText.textContent = "Wins: " + wins;
-        lossesText.textContent = "Losses: " + losses;
-    }
+
 
     function readLetter() {
         var x = gameOn.charCode || gameOn.keyCode; //this converts it to the character code
@@ -159,6 +150,15 @@ document.onkeyup = function(gameOn) {
         if (x > 64 && x < 91) { //this checks to make sure it's actually a letter
             userGuess = y.toLowerCase(); //logs the userGuess letter
             console.log(userGuess); 
+        }
+        else if ( x === 27) {
+            var con = confirm("Are you leaving me?");
+            if (con == true) {
+                goodBye();
+            }
+            else {
+                return;
+            }
         }
         else {
             alert("Please press a letter A-Z, you ding dong!") //if it's not a letter, it'll alert! I MEAN C'MON!
@@ -180,6 +180,7 @@ document.onkeyup = function(gameOn) {
             }
         }
     }
+
     function checkBank() {
         for (var i = 0; i < letter.length;  i++) {
             if (letter[i] === userGuess) {
@@ -194,61 +195,31 @@ document.onkeyup = function(gameOn) {
             }
         }
     }
+
+    function cleanSlate() {
+        word = 0;
+        wordAnswer = 0;
+        limbs = 5;
+        directionsText.textContent = "Press any key to try again!";
+        letterText.textContent = "Incorrect Letters Guessed: ";
+        limbsText.textContent = "Number of Limbs Remaining: " + limbs;
+        winsText.textContent = "Wins: " + wins;
+        lossesText.textContent = "Losses: " + losses;
+    }
+
     
 }
-    //     //     else {
-        // directionsText.textContent = "Press any key to play again!";
-        // return;
-        // }   
+
+function goodBye () {
+    directionsText.textContent = "Press any key if you want to play again, friend!";
+    letterText.style.display = 'none';    
+    winsText.style.display = 'none';  
+    lossesText.style.display = 'none';  
+    letterText.style.display = 'none';  
+    limbsText.style.display = 'none';  
+}
 
 
-    //Game on:
-    //take player guesses
-    //show game progress
-    //update wordAnswer for correct guesses
-    //update letterGuess for correct and incorrect guesses
-    //update remainingGuesses for incorrect guesses
-
-    //Player guesses (remember to convert to lowercase)
-    // document.onkeyup = function(event) {
-    //     gameOn()
-    // }
-
-    // If the word has not been guessed {
-    //     Show the player current progress
-    // }
-
-    //log the player's guess
-
-    //check if the guess is valid
-    // for (var j = 0; j < word.length; j++) { //loops thorugh the letters of the random word
-    //     if (word[j] === playerGuess) { //check if current letter in the word matches user entry
-    //         wordAnswer[j] = playerGuess; //if true, than the wordAnswer array will get updated with the player guess. It should update in that spot because its looping the the letters (hopefully, need to test once I guess the script from user keys and whatnot)
-    //         lettersLeft--; //if the letter matches, subtract 1 from the number of letters left (don't log this variable, I'm using this to track game status)
-    //     }
-    // }
-
-    // If the player guess matches any letter of the random word {
-    //     Reveal that letter in the word AND alert(letters log)
-    // }
-    // Else the player guesses a letter that doesn't match {
-    //     Log the guess and AND alert(letters log) AND alert(guesses log)
-    // }
-
-    //Log wins
-
-    //Log losses
-    //If the letter
-
-
-    //Current progress:
-    //Letters guessed
-    // var letterGuess = [];
-
-    // letterGuess.push = [playerGuess]
-
-    //Remaining guesses
-    //
     //END GAME OPTIONS
     // If the player want to quit game {
     //     Quit Game
