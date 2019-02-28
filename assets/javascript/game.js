@@ -56,9 +56,10 @@ var word = 0;
 var userGuess;
 var wordAnswer;
 var lettersLeft = 0;
-var wordAnsweNew;
 var check = 0;
 var limbs = 5;
+var checkBankFunction = false;
+var checkWordFunction = false;
 
 // Create variables that hold references to the places in the HTML where we want to display things.
 var directionsText = document.getElementById("directions-text");
@@ -90,23 +91,42 @@ document.onkeyup = function(gameOn) {
     
         //Create an array for remaining letters, which will be equal to the number of "_"
         lettersLeft = wordAnswer.length;
+        console.log(lettersLeft);
         directionsText.textContent = "Guess any letter of the alphabet!";
         letterText.textContent = "Incorrect Letters Guessed: ";
         limbsText.textContent = "Number of Limbs Remaining: " + limbs;
         winsText.textContent = "Wins: " + wins;
         lossesText.textContent = "Losses: " + losses;
-    
     }
 
 //LOOP the game while there are still letters remaining
     else if (lettersLeft > 0) {
-        userGuess = gameOn.key;
+        readLetter();
+        checkBank();
+        checkWord();
+        if (checkBankFunction === false && checkWordFunction === false) {
+            letterLoop();
+        }
+        else {
+            return;
+        }
+    }
+
+
+    function letterLoop() {
         check = lettersLeft;
+        console.log(lettersLeft);
         for (var i = 0; i < wordAnswer.length;  i++) {
             if (word[i] === userGuess) {
                 lettersLeft--;
+                console.log(lettersLeft);
                 wordAnswer[i] = userGuess;
                 wordAnswerText.textContent = wordAnswer.join(" ");
+                if ((lettersLeft === 0)&&(limbs > 0)) {
+                    alert("OMG!!! You guessed the word " + word + "!")
+                    wins++;
+                    cleanSlate();
+                }
             }
         }
         if ((lettersLeft - check) === 0) {
@@ -114,19 +134,65 @@ document.onkeyup = function(gameOn) {
             limbsText.textContent = "Number of Limbs Remaining: " + limbs;
             letter.push(userGuess);
             letterText.textContent = ("Incorrect Letters Guessed: " + letter.join(" "));
+            if (limbs === 0) {
+                alert("SURIOUSLY?! The word was " + word + "!")
+                losses++;
+                cleanSlate();
+            }
         }
     }
-    else if ((lettersLeft === 0)&&(limbs > 0)) {
-        wins++;
+
+    function cleanSlate() {
         word = 0;
-        wordAnswer = null;
-        userGuess = null;
+        wordAnswer = 0;
+        limbs = 5;
+        directionsText.textContent = "Press any key to try again!";
+        letterText.textContent = "Incorrect Letters Guessed: ";
+        limbsText.textContent = "Number of Limbs Remaining: " + limbs;
+        winsText.textContent = "Wins: " + wins;
+        lossesText.textContent = "Losses: " + losses;
     }
-    else if (limbs == 0) {
-        losses++;
-        word = 0;
-        wordAnswer = null;
-        userGuess = null;
+
+    function readLetter() {
+        var x = gameOn.charCode || gameOn.keyCode; //this converts it to the character code
+        var y = String.fromCharCode(x);  //keeps one version a string
+        if (x > 64 && x < 91) { //this checks to make sure it's actually a letter
+            userGuess = y.toLowerCase(); //logs the userGuess letter
+            console.log(userGuess); 
+        }
+        else {
+            alert("Please press a letter A-Z, you ding dong!") //if it's not a letter, it'll alert! I MEAN C'MON!
+            return;
+        }
+    }
+
+    function checkWord() {
+        for (var i = 0; i < wordAnswer.length;  i++) {
+            if (wordAnswer[i] === userGuess) {
+                alert("You already picked that letter, C'MON!");
+                checkWordFunction = true;
+                console.log("Word check true");
+                return;
+            }
+            else {
+                checkWordFunction = false;
+                console.log("Word check false");
+            }
+        }
+    }
+    function checkBank() {
+        for (var i = 0; i < letter.length;  i++) {
+            if (letter[i] === userGuess) {
+                alert("Are you TRYING to lose more limbs?");
+                checkBankFunction = true;
+                console.log("Bank check true");
+                return;
+            }
+            else {
+                checkBankFunction = false;
+                console.log("Bank check false");
+            }
+        }
     }
     
 }
