@@ -60,6 +60,7 @@ var check = 0;
 var limbs = 5;
 var checkBankFunction = false;
 var checkWordFunction = false;
+var cancelled = false;
 
 // Create variables that hold references to the places in the HTML where we want to display things.
 var directionsText = document.getElementById("directions-text");
@@ -72,7 +73,10 @@ var limbsText = document.getElementById("limbs-text");
 
 
 document.onkeyup = function(gameOn) {
-    if (word == 0) {
+    if (cancelled) {
+        return;
+    }
+    else if (word == 0) {
         //pick a random word from the array
         word = words[Math.floor(Math.random() * words.length)];
         console.log(word);
@@ -87,13 +91,14 @@ document.onkeyup = function(gameOn) {
         for (var i = 0; i < word.length; i++) {
             wordAnswer[i] = ("_");
         }
+        wordAnswerText.style.color = "black";
         wordAnswerText.textContent = wordAnswer.join(" ");
     
         //Create an array for remaining letters, which will be equal to the number of "_"
         lettersLeft = wordAnswer.length;
         console.log(lettersLeft);
         directionsText.textContent = "Guess any letter of the alphabet!";
-        letterText.textContent = "Incorrect Letters Guessed: ";
+        letterText.textContent = "Incorrect Letters Guessed: " + letter;
         limbsText.textContent = "Number of Limbs Remaining: " + limbs;
         winsText.textContent = "Wins: " + wins;
         lossesText.textContent = "Losses: " + losses;
@@ -112,17 +117,16 @@ document.onkeyup = function(gameOn) {
         }
     }
 
-
     function letterLoop() {
         check = lettersLeft;
-        console.log(lettersLeft);
         for (var i = 0; i < wordAnswer.length;  i++) {
             if (word[i] === userGuess) {
                 lettersLeft--;
-                console.log(lettersLeft);
                 wordAnswer[i] = userGuess;
+                wordAnswerText.style.color = "black";
                 wordAnswerText.textContent = wordAnswer.join(" ");
                 if ((lettersLeft === 0)&&(limbs > 0)) {
+                    wordAnswerText.textContent = word;
                     alert("OMG!!! You guessed the word " + word + "!")
                     wins++;
                     cleanSlate();
@@ -135,14 +139,14 @@ document.onkeyup = function(gameOn) {
             letter.push(userGuess);
             letterText.textContent = ("Incorrect Letters Guessed: " + letter.join(" "));
             if (limbs === 0) {
+                wordAnswerText.textContent = word;
+                wordAnswerText.style.color = "red";
                 alert("SURIOUSLY?! The word was " + word + "!")
                 losses++;
                 cleanSlate();
             }
         }
     }
-
-
 
     function readLetter() {
         var x = gameOn.charCode || gameOn.keyCode; //this converts it to the character code
@@ -171,12 +175,10 @@ document.onkeyup = function(gameOn) {
             if (wordAnswer[i] === userGuess) {
                 alert("You already picked that letter, C'MON!");
                 checkWordFunction = true;
-                console.log("Word check true");
                 return;
             }
             else {
                 checkWordFunction = false;
-                console.log("Word check false");
             }
         }
     }
@@ -186,21 +188,20 @@ document.onkeyup = function(gameOn) {
             if (letter[i] === userGuess) {
                 alert("Are you TRYING to lose more limbs?");
                 checkBankFunction = true;
-                console.log("Bank check true");
                 return;
             }
             else {
                 checkBankFunction = false;
-                console.log("Bank check false");
             }
         }
     }
 
     function cleanSlate() {
         word = 0;
-        wordAnswer = 0;
+        wordAnswer = [];
         limbs = 5;
-        directionsText.textContent = "Press any key to try again!";
+        letter = [];
+        directionsText.innerHTML = "<i>Press any key to play again!</i>";
         letterText.textContent = "Incorrect Letters Guessed: ";
         limbsText.textContent = "Number of Limbs Remaining: " + limbs;
         winsText.textContent = "Wins: " + wins;
@@ -211,12 +212,14 @@ document.onkeyup = function(gameOn) {
 }
 
 function goodBye () {
-    directionsText.textContent = "Press any key if you want to play again, friend!";
+    directionsText.textContent = "Sayonara!";
     letterText.style.display = 'none';    
     winsText.style.display = 'none';  
     lossesText.style.display = 'none';  
     letterText.style.display = 'none';  
-    limbsText.style.display = 'none';  
+    limbsText.style.display = 'none';
+    wordAnswerText.style.display = 'none';
+    cancelled = true; //gameOn will not run if set to true
 }
 
 
