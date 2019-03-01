@@ -46,30 +46,34 @@ var words = [
     "paarthurnax",
 ];
 
-//variables for number of wins/losses (start at 0)
+//variables and arrays that we see
+var letter = [];
+var limbs = 6;
 var wins = 0;
 var losses = 0;
-var letter = [];
 
-//Ghost variables
+
+//Ghost variables and arrays
 var word = 0;
 var userGuess;
-var wordAnswer;
+var wordAnswer = []; //placeholder array for my word letters
 var lettersLeft = 0;
 var check = 0;
-var limbs = 5;
+
 var checkBankFunction = false;
 var checkWordFunction = false;
 var cancelled = false;
 
 // Create variables that hold references to the places in the HTML where we want to display things.
 var directionsText = document.getElementById("directions-text");
-var userChoiceText = document.getElementById("userchoice-text");
 var wordAnswerText = document.getElementById("word-answer-text");
-var winsText = document.getElementById("wins-text");
-var lossesText = document.getElementById("losses-text");
 var letterText = document.getElementById("letter-text");
 var limbsText = document.getElementById("limbs-text");
+var winsText = document.getElementById("wins-text");
+var lossesText = document.getElementById("losses-text");
+var wordBox =  document.getElementById("word-answer-box");
+var hangBox =  document.getElementById("hang-box");
+
 
 
 document.onkeyup = function(gameOn) {
@@ -77,53 +81,37 @@ document.onkeyup = function(gameOn) {
         return;
     }
     else if (word == 0) {
-        //pick a random word from the array
-        word = words[Math.floor(Math.random() * words.length)];
-        console.log(word);
-    
-        //remove that word from the array so it doesn't get selected again:
-        // indexOf.words[]
-    
-        //create an array to hold the placeholder letters ("_") for the randomized word
-        wordAnswer = [];
-    
-        //This is a loop that will add one "_" until the "n-1" the word.length. This works out to the number of letters in the word because it starts at 0! The word becomes an array of "_"
-        for (var i = 0; i < word.length; i++) {
+        word = words[Math.floor(Math.random() * words.length)]; 
+        //This is a loop that will add one "_" until the "n-1" the word.length.
+        for (var i = 0; i < word.length; i++) { 
             wordAnswer[i] = ("_");
-        }
-        wordAnswerText.style.color = "black";
-        wordAnswerText.textContent = wordAnswer.join(" ");
-    
-        //Create an array for remaining letters, which will be equal to the number of "_"
-        lettersLeft = wordAnswer.length;
-        console.log(lettersLeft);
-        directionsText.textContent = "Guess any letter of the alphabet!";
-        letterText.textContent = "Incorrect Letters Guessed: " + letter;
-        limbsText.textContent = "Number of Limbs Remaining: " + limbs;
-        winsText.textContent = "Wins: " + wins;
-        lossesText.textContent = "Losses: " + losses;
+        };
+        wordBox.style.borderTop = "thin solid #68CEB3";
+        hangBox.style.borderTop = "thin solid #68CEB3";
+    //my function for the scoreboard and whatnot
+    progressTracker();
     }
 
-//LOOP the game while there are still letters remaining
+    //LOOP the game while there are still letters remaining
     else if (lettersLeft > 0) {
-        readLetter();
-        checkBank();
-        checkWord();
+        readLetter(); //check to make sure its actually a letter and the user doesn't want to peace out
+        checkBank(); //check to make sure letter hasn't been guessed before (incorrectly)
+        checkWord(); //check to make sure letter hasn't been guessed before (correctly)
         if (checkBankFunction === false && checkWordFunction === false) {
-            letterLoop();
+            letterLoop(); //commence the search for the letter
         }
         else {
-            return;
+            return; //stop looking if the letter has already been selected (either check function is true)
         }
     }
 
     function letterLoop() {
+        directionsText.textContent = " ";
         check = lettersLeft;
         for (var i = 0; i < wordAnswer.length;  i++) {
             if (word[i] === userGuess) {
                 lettersLeft--;
                 wordAnswer[i] = userGuess;
-                wordAnswerText.style.color = "black";
                 wordAnswerText.textContent = wordAnswer.join(" ");
                 if ((lettersLeft === 0)&&(limbs > 0)) {
                     wordAnswerText.textContent = word;
@@ -140,12 +128,21 @@ document.onkeyup = function(gameOn) {
             letterText.textContent = ("Incorrect Letters Guessed: " + letter.join(" "));
             if (limbs === 0) {
                 wordAnswerText.textContent = word;
-                wordAnswerText.style.color = "red";
                 alert("SURIOUSLY?! The word was " + word + "!")
                 losses++;
                 cleanSlate();
             }
         }
+    }
+
+    function progressTracker () {
+        wordAnswerText.textContent = wordAnswer.join(" ");
+        lettersLeft = wordAnswer.length; //my array that counts the "_" (in a nutshell)
+        directionsText.textContent = "Guess any letter of the alphabet!";
+        letterText.textContent = "Incorrect Letters Guessed: " + letter;
+        limbsText.textContent = "Number of Limbs Remaining: " + limbs;
+        winsText.textContent = "Wins: " + wins;
+        lossesText.textContent = "Losses: " + losses;
     }
 
     function readLetter() {
@@ -173,7 +170,6 @@ document.onkeyup = function(gameOn) {
     function checkWord() {
         for (var i = 0; i < wordAnswer.length;  i++) {
             if (wordAnswer[i] === userGuess) {
-                alert("You already picked that letter, C'MON!");
                 checkWordFunction = true;
                 return;
             }
@@ -186,7 +182,6 @@ document.onkeyup = function(gameOn) {
     function checkBank() {
         for (var i = 0; i < letter.length;  i++) {
             if (letter[i] === userGuess) {
-                alert("Are you TRYING to lose more limbs?");
                 checkBankFunction = true;
                 return;
             }
@@ -199,7 +194,7 @@ document.onkeyup = function(gameOn) {
     function cleanSlate() {
         word = 0;
         wordAnswer = [];
-        limbs = 5;
+        limbs = 6;
         letter = [];
         directionsText.innerHTML = "<i>Press any key to play again!</i>";
         letterText.textContent = "Incorrect Letters Guessed: ";
@@ -207,8 +202,7 @@ document.onkeyup = function(gameOn) {
         winsText.textContent = "Wins: " + wins;
         lossesText.textContent = "Losses: " + losses;
     }
-
-    
+ 
 }
 
 function goodBye () {
@@ -221,16 +215,3 @@ function goodBye () {
     wordAnswerText.style.display = 'none';
     cancelled = true; //gameOn will not run if set to true
 }
-
-
-    //END GAME OPTIONS
-    // If the player want to quit game {
-    //     Quit Game
-    // }
-
-    // If the player guesses the word {
-    //     End game and log win
-    // }
-
-    // If the player does not guess the word AND choices are up {
-    // End game and log loss

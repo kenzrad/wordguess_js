@@ -4,26 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel='icon' href='assets/images/gallows.ico' type='image/x-icon'/>
+    <link rel='stylesheet' href="assets/css/reset.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel='stylesheet' href="assets/css/style.css"/>
+
     <title>Say what?</title>
+
 </head>
+
 <body>
-    <div>
-        <p id="directions-text">Press any key to start playing!</p>
-        <p id="userchoice-text"></p>
-        <p id="word-answer-text"></p>
-        <p id="letter-text"></p>
-        <p id="limbs-text"></p>
-        <p id="wins-text"></p>
-        <p id="losses-text"></p>
-        <p id="key-up"></p>
-      </div>
-    
-    <div>
-        <element id="start"></element>
-        <element id="game-on"></element>
-        <element id="user-key"></element>
+    <header class="header-fluid text-center mb-4 py-3">
+        <img src="https://fontmeme.com/permalink/190301/89cc380ada865aa00cbc59374b9d527d.png" class="img-fluid" alt="pixel-fonts">
+    </header>
+
+    <div class="container">
+        <div class="row my-1">
+            <div class="col-md-12" id="directions-box">
+                <p class="text-center p-0" id="directions-text">Press any key to start playing!</p>
+            </div>
+        </div>
+
+        <div class="row row-equal-height align-bottom my-1">    
+            <div class="col-md-2"></div>
+            <div class="col-md-4" id="word-answer-box">
+                <p class="text-center" id="word-answer-text">TEST</p>
+                <p id="letter-text"></p>
+                <p id="limbs-text"></p>
+                <p id="wins-text"></p>
+                <p id="losses-text"></p>
+            </div>
+            <div class="col-md-4 text-center" id="hang-box">
+                <img class="img-fluid" src="assets/images/gallow_dead.gif" alt="hangman">
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
     </div>
+
+    <footer class="text-center mt-5">Copyright 2019</footer>
+</div>
+    
     
 <script src="assets/javascript/game.js"></script>
 </body>
 </html>
+
+<i class="fas fa-gamepad"></i>
