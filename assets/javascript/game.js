@@ -112,9 +112,10 @@ document.onkeyup = function(gameOn) {
             if (word[i] === userGuess) {
                 lettersLeft--;
                 wordAnswer[i] = userGuess;
-                wordAnswerText.textContent = wordAnswer.join(" ");
+                wordAnswerText.textContent = wordAnswer.join("");
                 if ((lettersLeft === 0)&&(limbs > 0)) {
                     wordAnswerText.textContent = word;
+                    // wordAnswerText.style.letterSpacing="3px"; Need to figure this out so it spaces the same as the "_"
                     wins++;
                     win();
                     cleanSlate();
@@ -129,6 +130,7 @@ document.onkeyup = function(gameOn) {
             letterText.textContent = ("Incorrect: " + letter.join(" "));
             if (limbs === 0) {
                 wordAnswerText.textContent = word;
+                // wordAnswerText.style.letterSpacing="100px";
                 losses++;
                 maim();
                 cleanSlate();
@@ -138,11 +140,11 @@ document.onkeyup = function(gameOn) {
     }
 
     function progressTracker () {
-        wordAnswerText.textContent = wordAnswer.join(" ");
+        wordAnswerText.textContent = wordAnswer.join("");
         lettersLeft = wordAnswer.length; //my array that counts the "_" (in a nutshell)
         directionsText.textContent = "Guess any letter of the alphabet!";
         letterText.textContent = "Incorrect: " + letter;
-        winsText.textContent = "Won: " + wins + " | Lost: " + losses; 
+        winsText.textContent = "WON: " + wins + " | LOST: " + losses; 
     }
 
     function readLetter() {
@@ -228,7 +230,7 @@ document.onkeyup = function(gameOn) {
         letter = [];
         directionsText.innerHTML = "<i>Press any key to play again!</i>";
         letterText.textContent = "Incorrect: ";
-        winsText.textContent =  "Won: " + wins + " | Lost: " + losses; 
+        winsText.textContent =  "WON: " + wins + " | LOST: " + losses; 
     }
  
 }

@@ -31,8 +31,11 @@ h1 {
 
 #word-answer-text {
     color: 	#FFFF66;
-    line-height: 15em;
+    line-height: 8em;
     margin-bottom: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+    font-size: 1.75em;
     /* display: table-cell;
     vertical-align: bottom; */
 }
@@ -42,7 +45,7 @@ h1 {
     color: 	#68CEB3;
     line-height: 4em;
     border-color: #68CEB3;
-
+    text-transform: uppercase;
 }
 
 
