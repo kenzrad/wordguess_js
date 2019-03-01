@@ -68,9 +68,7 @@ var cancelled = false;
 var directionsText = document.getElementById("directions-text");
 var wordAnswerText = document.getElementById("word-answer-text");
 var letterText = document.getElementById("letter-text");
-var limbsText = document.getElementById("limbs-text");
 var winsText = document.getElementById("wins-text");
-var lossesText = document.getElementById("losses-text");
 var wordBox =  document.getElementById("word-answer-box");
 var hangBox =  document.getElementById("hang-box");
 var hangMan = document.getElementById("hang-man");
@@ -89,7 +87,7 @@ document.onkeyup = function(gameOn) {
         };
         wordBox.style.borderTop = "thin solid #68CEB3";
         hangBox.style.borderTop = "thin solid #68CEB3";
-        hangMan.style.visibility = "visible";
+        maim()
     //my function for the scoreboard and whatnot
     progressTracker();
     }
@@ -117,23 +115,22 @@ document.onkeyup = function(gameOn) {
                 wordAnswerText.textContent = wordAnswer.join(" ");
                 if ((lettersLeft === 0)&&(limbs > 0)) {
                     wordAnswerText.textContent = word;
-                    alert("OMG!!! You guessed the word " + word + "!")
                     wins++;
+                    win();
                     cleanSlate();
-                    maim();
+                    
                 }
             }
         }
         if ((lettersLeft - check) === 0) {
             limbs--;
             maim();
-            limbsText.textContent = "Number of Limbs Remaining: " + limbs;
             letter.push(userGuess);
-            letterText.textContent = ("Incorrect Letters Guessed: " + letter.join(" "));
+            letterText.textContent = ("Incorrect: " + letter.join(" "));
             if (limbs === 0) {
                 wordAnswerText.textContent = word;
-                maim();
                 losses++;
+                maim();
                 cleanSlate();
                 
             }
@@ -144,10 +141,8 @@ document.onkeyup = function(gameOn) {
         wordAnswerText.textContent = wordAnswer.join(" ");
         lettersLeft = wordAnswer.length; //my array that counts the "_" (in a nutshell)
         directionsText.textContent = "Guess any letter of the alphabet!";
-        letterText.textContent = "Incorrect Letters Guessed: " + letter;
-        limbsText.textContent = "Number of Limbs Remaining: " + limbs;
-        winsText.textContent = "Wins: " + wins;
-        lossesText.textContent = "Losses: " + losses;
+        letterText.textContent = "Incorrect: " + letter;
+        winsText.textContent = "Won: " + wins + " | Lost: " + losses; 
     }
 
     function readLetter() {
@@ -221,16 +216,19 @@ document.onkeyup = function(gameOn) {
         }
     }
 
+    function win() {
+        hangMan.style.visibility = "visible";
+        document.getElementById("hang-man").src="assets/images/win.gif";
+    }
+
     function cleanSlate() {
         word = 0;
         wordAnswer = [];
         limbs = 6;
         letter = [];
         directionsText.innerHTML = "<i>Press any key to play again!</i>";
-        letterText.textContent = "Incorrect Letters Guessed: ";
-        limbsText.textContent = "Number of Limbs Remaining: " + limbs;
-        winsText.textContent = "Wins: " + wins;
-        lossesText.textContent = "Losses: " + losses;
+        letterText.textContent = "Incorrect: ";
+        winsText.textContent =  "Won: " + wins + " | Lost: " + losses; 
     }
  
 }
@@ -238,10 +236,8 @@ document.onkeyup = function(gameOn) {
 function goodBye () {
     directionsText.textContent = "Sayonara!";
     letterText.style.display = 'none';    
-    winsText.style.display = 'none';  
-    lossesText.style.display = 'none';  
+    winsText.style.display = 'none';   
     letterText.style.display = 'none';  
-    limbsText.style.display = 'none';
     wordAnswerText.style.display = 'none';
     cancelled = true; //gameOn will not run if set to true
 }

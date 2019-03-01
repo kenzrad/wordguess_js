@@ -30,24 +30,21 @@ h1 {
 }
 
 #word-answer-text {
-    color: #68CEB3;
+    color: 	#FFFF66;
     line-height: 15em;
     margin-bottom: 0;
     /* display: table-cell;
     vertical-align: bottom; */
 }
 
-#parameter-box {
-    /* height: 400px; */
-}
 
 #letter-text {
-    color: #68CEB3;
+    color: 	#68CEB3;
+    line-height: 4em;
+    border-color: #68CEB3;
+
 }
 
-#limbs-text {
-    color: #68CEB3;
-}
 
 #wins-text {
     color: #68CEB3;
