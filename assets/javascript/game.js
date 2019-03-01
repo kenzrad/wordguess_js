@@ -73,8 +73,9 @@ var winsText = document.getElementById("wins-text");
 var lossesText = document.getElementById("losses-text");
 var wordBox =  document.getElementById("word-answer-box");
 var hangBox =  document.getElementById("hang-box");
+var hangMan = document.getElementById("hang-man");
 
-
+hangMan.style.visibility = "hidden";
 
 document.onkeyup = function(gameOn) {
     if (cancelled) {
@@ -88,6 +89,7 @@ document.onkeyup = function(gameOn) {
         };
         wordBox.style.borderTop = "thin solid #68CEB3";
         hangBox.style.borderTop = "thin solid #68CEB3";
+        hangMan.style.visibility = "visible";
     //my function for the scoreboard and whatnot
     progressTracker();
     }
@@ -118,19 +120,22 @@ document.onkeyup = function(gameOn) {
                     alert("OMG!!! You guessed the word " + word + "!")
                     wins++;
                     cleanSlate();
+                    maim();
                 }
             }
         }
         if ((lettersLeft - check) === 0) {
             limbs--;
+            maim();
             limbsText.textContent = "Number of Limbs Remaining: " + limbs;
             letter.push(userGuess);
             letterText.textContent = ("Incorrect Letters Guessed: " + letter.join(" "));
             if (limbs === 0) {
                 wordAnswerText.textContent = word;
-                alert("SURIOUSLY?! The word was " + word + "!")
+                maim();
                 losses++;
                 cleanSlate();
+                
             }
         }
     }
@@ -188,6 +193,31 @@ document.onkeyup = function(gameOn) {
             else {
                 checkBankFunction = false;
             }
+        }
+    }
+
+    function maim() {
+        hangMan.style.visibility = "visible";
+        if (limbs === 6) {
+            document.getElementById("hang-man").src="assets/images/gallow.gif";
+        }
+        else if (limbs === 5) {
+            document.getElementById("hang-man").src="assets/images/gallow_1.gif";
+        }
+        else if (limbs === 4) {
+            document.getElementById("hang-man").src="assets/images/gallow_2.gif";
+        }
+        if (limbs === 3) {
+            document.getElementById("hang-man").src="assets/images/gallow_3.gif";
+        }
+        if (limbs === 2) {
+            document.getElementById("hang-man").src="assets/images/gallow_4.gif";
+        }
+        if (limbs === 1) {
+            document.getElementById("hang-man").src="assets/images/gallow_5.gif";
+        }
+        if (limbs === 0) {
+            document.getElementById("hang-man").src="assets/images/gallow_dead.gif";
         }
     }
 
