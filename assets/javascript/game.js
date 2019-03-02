@@ -46,6 +46,35 @@ var words = [
     "paarthurnax",
 ];
 
+var insults = [
+    "Are you even trying?",
+    "Do you even game?",
+    "I don't know what makes you so stupid, but it really works!",
+    "Okay, dumb-dumb",
+    "Suriously - there are only 26 letters in the alphabet",
+    "And you call yourself a Nord.",
+    "WELL, we all know who here wouldn't survive nuclear fallout",
+    "I just can't",
+    "COME ON!",
+    "Are you always this thick?",
+    "Navi can't save you now",
+    "We are all very disappointed in you.",
+    "I have no words",
+    "wrong AGAIN",
+    "WRONG",
+    "NEWP",
+    "Negatory",
+    "Not even close, Mr. Not-even-close-man",
+    "Do you enjoy failure?",
+    "Yo momma wears army boots",
+    "How could you do that to Mr. Blue Man Friend?",
+    "You do realize what's at stake here, right?",
+    "Awwwwww you're so cute when you try",
+    "no no NO!",
+    "Disappointing.",
+    "....",
+];
+
 //variables and arrays that we see
 var letter = [];
 var limbs = 6;
@@ -59,6 +88,7 @@ var userGuess;
 var wordAnswer = []; //placeholder array for my word letters
 var lettersLeft = 0;
 var check = 0;
+var howDare;
 
 var checkBankFunction = false;
 var checkWordFunction = false;
@@ -72,6 +102,7 @@ var winsText = document.getElementById("wins-text");
 var wordBox =  document.getElementById("word-answer-box");
 var hangBox =  document.getElementById("hang-box");
 var hangMan = document.getElementById("hang-man");
+var insultDiv = document.getElementById("insult-div");
 
 hangMan.style.visibility = "hidden";
 
@@ -107,6 +138,7 @@ document.onkeyup = function(gameOn) {
 
     function letterLoop() {
         directionsText.textContent = " ";
+        insultDiv.textContent = " ";
         check = lettersLeft;
         for (var i = 0; i < wordAnswer.length;  i++) {
             if (word[i] === userGuess) {
@@ -115,8 +147,6 @@ document.onkeyup = function(gameOn) {
                 wordAnswerText.textContent = wordAnswer.join("");
                 if ((lettersLeft === 0)&&(limbs > 0)) {
                     wordAnswerText.textContent = word;
-                    // wordAnswerText.style.letterSpacing="3px"; Need to figure this out so it spaces the same as the "_"
-                    wins++;
                     win();
                     cleanSlate();
                     
@@ -130,11 +160,8 @@ document.onkeyup = function(gameOn) {
             letterText.textContent = ("Incorrect: " + letter.join(" "));
             if (limbs === 0) {
                 wordAnswerText.textContent = word;
-                // wordAnswerText.style.letterSpacing="100px";
-                losses++;
-                maim();
+                lose();
                 cleanSlate();
-                
             }
         }
     }
@@ -200,27 +227,40 @@ document.onkeyup = function(gameOn) {
         }
         else if (limbs === 5) {
             document.getElementById("hang-man").src="assets/images/gallow_1.gif";
+            insult();
         }
         else if (limbs === 4) {
             document.getElementById("hang-man").src="assets/images/gallow_2.gif";
+            insult();
         }
         if (limbs === 3) {
             document.getElementById("hang-man").src="assets/images/gallow_3.gif";
+            insult();
         }
         if (limbs === 2) {
             document.getElementById("hang-man").src="assets/images/gallow_4.gif";
+            insult();
         }
         if (limbs === 1) {
             document.getElementById("hang-man").src="assets/images/gallow_5.gif";
-        }
-        if (limbs === 0) {
-            document.getElementById("hang-man").src="assets/images/gallow_dead.gif";
+            insult();
         }
     }
 
+    function insult() {
+        howDare = insults[Math.floor(Math.random() * insults.length)]; 
+        insultDiv.textContent = howDare;
+    }
+
     function win() {
+        wins++;
         hangMan.style.visibility = "visible";
         document.getElementById("hang-man").src="assets/images/win.gif";
+    }
+
+    function lose() {
+        document.getElementById("hang-man").src="assets/images/gallow_dead.gif";
+        losses++;
     }
 
     function cleanSlate() {
@@ -236,10 +276,16 @@ document.onkeyup = function(gameOn) {
 }
 
 function goodBye () {
-    directionsText.textContent = "Sayonara!";
+    document.getElementById("headHeadHead").src="https://fontmeme.com/permalink/190302/823c506ee10425ea8f1ee94797b69465.png";
     letterText.style.display = 'none';    
     winsText.style.display = 'none';   
     letterText.style.display = 'none';  
     wordAnswerText.style.display = 'none';
+    letterText.style.display = 'none';
+    winsText.style.display = 'none';
+    wordBox.style.display = 'none';
+    hangBox.style.display = 'none';
+    hangMan.style.display = 'none';
+    insultDiv.style.display = 'none';
     cancelled = true; //gameOn will not run if set to true
 }

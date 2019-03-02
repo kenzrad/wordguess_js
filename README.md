@@ -1,0 +1,1 @@
+A simple hangman game using javascript, CSS/Bootstrap, and HTML. Javascript keyup event listeners are used, so not compatible on many mobile devices. 
